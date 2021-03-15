@@ -8,4 +8,8 @@ public interface Rover {
     Coordinates getPosition();
     Direction getDirection();
 
+    void rotateLeft();
+    void rotateRight();
+    boolean tryMoveForward();
+    boolean tryMoveBackwards();
 }
