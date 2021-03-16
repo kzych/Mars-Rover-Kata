@@ -25,8 +25,17 @@ public class Coordinates {
     }
 
     public boolean canMove(long xDiff, long yDiff) {
-        return (xDiff <= Long.MAX_VALUE - x) && (xDiff >= Long.MIN_VALUE - x) &&
-                (yDiff <= Long.MAX_VALUE - y) && (yDiff >= Long.MIN_VALUE - y);
+
+        return (xDiff > 0 ? isInUpperBound(x, xDiff) : isInLowerBound(x, xDiff)) &&
+                (yDiff > 0 ? isInUpperBound(y, yDiff) : isInLowerBound(y, yDiff));
+    }
+
+    private boolean isInUpperBound(long current, long diff){
+        return current <= Long.MAX_VALUE - diff;
+    }
+
+    private boolean isInLowerBound(long current, long diff){
+        return current >= Long.MIN_VALUE - diff;
     }
 
     public Coordinates moved(long xDiff, long yDiff){

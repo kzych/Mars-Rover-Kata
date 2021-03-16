@@ -351,4 +351,27 @@ public class RoverControlTest {
         assertFalse("Rover should not move if position has not changed", moved);
     }
 
+    @Test
+    public void shouldFollowSamplePath() {
+
+        //given
+        Coordinates startingPoint = Coordinates.of(-100, 200);
+        Direction startingDirection = Direction.SOUTH;
+        Rover rover = new MarsRover(startingPoint, startingDirection);
+
+        //when
+        rover.rotateRight();
+        boolean moved = rover.tryMoveForward();
+        rover.rotateLeft();
+        moved = moved && rover.tryMoveBackwards();
+        rover.rotateRight();
+        Coordinates position = rover.getPosition();
+        Direction direction = rover.getDirection();
+
+        //then
+        assertTrue("Rover should move twice", moved);
+        assertEquals("Rover's position should be updated", Coordinates.of(-101, 201), position);
+        assertEquals("Rover's direction should be updated", Direction.WEST, direction);
+    }
+
 }
