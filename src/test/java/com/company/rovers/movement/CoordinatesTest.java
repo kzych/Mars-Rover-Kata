@@ -8,76 +8,105 @@ public class CoordinatesTest {
 
     @Test
     public void shouldMovePointSouth() {
-        long xDiff = -1, yDiff = 0;
-        doMovePointTest(xDiff, yDiff);
+        //given
+        Coordinates coordinates = Coordinates.of(0, 0);
+        Direction direction = Direction.SOUTH;
+        long distance = 100;
+
+        //when
+        boolean canMove = coordinates.canMove(direction, distance);
+        Coordinates moved = coordinates.moved(direction, distance);
+
+        //then
+        assertTrue(canMove);
+        assertEquals(Coordinates.of(0, -100), moved);
     }
 
     @Test
     public void shouldMovePointNorth() {
-        long xDiff = 1, yDiff = 0;
-        doMovePointTest(xDiff, yDiff);
+        //given
+        Coordinates coordinates = Coordinates.of(0, 0);
+        Direction direction = Direction.NORTH;
+        long distance = 100;
+
+        //when
+        boolean canMove = coordinates.canMove(direction, distance);
+        Coordinates moved = coordinates.moved(direction, distance);
+
+        //then
+        assertTrue(canMove);
+        assertEquals(Coordinates.of(0, 100), moved);
     }
 
     @Test
     public void shouldMovePointWest() {
-        long xDiff = 0, yDiff = -1;
-        doMovePointTest(xDiff, yDiff);
+        //given
+        Coordinates coordinates = Coordinates.of(0, 0);
+        Direction direction = Direction.WEST;
+        long distance = 100;
+
+        //when
+        boolean canMove = coordinates.canMove(direction, distance);
+        Coordinates moved = coordinates.moved(direction, distance);
+
+        //then
+        assertTrue(canMove);
+        assertEquals(Coordinates.of(-100, 0), moved);
     }
 
     @Test
     public void shouldMovePointEast() {
-        long xDiff = 0, yDiff = 1;
-        doMovePointTest(xDiff, yDiff);
-    }
-
-    private void doMovePointTest(long xDiff, long yDiff){
         //given
         Coordinates coordinates = Coordinates.of(0, 0);
+        Direction direction = Direction.EAST;
+        long distance = 100;
 
         //when
-        boolean canMove = coordinates.canMove(xDiff, yDiff);
-        Coordinates moved = coordinates.moved(xDiff, yDiff);
+        boolean canMove = coordinates.canMove(direction, distance);
+        Coordinates moved = coordinates.moved(direction, distance);
 
         //then
         assertTrue(canMove);
-        assertEquals(xDiff, moved.getX());
-        assertEquals(yDiff, moved.getY());
+        assertEquals(Coordinates.of(100, 0), moved);
     }
 
     @Test
-    public void shouldNotAllowMovingBeyondRightBound() {
+    public void shouldNotAllowMovingBeyondEastBound() {
         //given
         Coordinates coordinates = Coordinates.of(Long.MAX_VALUE, 0);
-        long xDiff = 1, yDiff = 0;
+        Direction direction = Direction.EAST;
+        long distance = 1;
 
         //when
-        boolean canMove = coordinates.canMove(xDiff, yDiff);
+        boolean canMove = coordinates.canMove(direction, distance);
 
         //then
         assertFalse(canMove);
     }
 
     @Test
-    public void shouldNotAllowMovingBeyondLeftBound() {
+    public void shouldNotAllowMovingBeyondWestBound() {
         //given
         Coordinates coordinates = Coordinates.of(Long.MIN_VALUE, 0);
-        long xDiff = -1, yDiff = 0;
+        Direction direction = Direction.WEST;
+        long distance = 1;
 
         //when
-        boolean canMove = coordinates.canMove(xDiff, yDiff);
+        boolean canMove = coordinates.canMove(direction, distance);
 
         //then
         assertFalse(canMove);
     }
 
     @Test
-    public void shouldNotAllowMovingBeyondTopBound() {
+    public void shouldNotAllowMovingBeyondNorthBound() {
         //given
         Coordinates coordinates = Coordinates.of(0, Long.MAX_VALUE);
-        long xDiff = 0, yDiff = 1;
+        Direction direction = Direction.NORTH;
+        long distance = 1;
 
         //when
-        boolean canMove = coordinates.canMove(xDiff, yDiff);
+        boolean canMove = coordinates.canMove(direction, distance);
 
         //then
         assertFalse(canMove);
@@ -85,65 +114,70 @@ public class CoordinatesTest {
 
 
     @Test
-    public void shouldNotAllowMovingBeyondBottomBound() {
+    public void shouldNotAllowMovingBeyondSouthBound() {
         //given
         Coordinates coordinates = Coordinates.of(0, Long.MIN_VALUE);
-        long xDiff = 0, yDiff = -1;
+        Direction direction = Direction.SOUTH;
+        long distance = 1;
 
         //when
-        boolean canMove = coordinates.canMove(xDiff, yDiff);
+        boolean canMove = coordinates.canMove(direction, distance);
 
         //then
         assertFalse(canMove);
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void shouldFailMovingBeyondBottomBound() {
+    public void shouldFailMovingBeyondSouthBound() {
         //given
         Coordinates coordinates = Coordinates.of(0, Long.MIN_VALUE);
-        long xDiff = 0, yDiff = -1;
+        Direction direction = Direction.SOUTH;
+        long distance = 1;
 
         //when
-        coordinates.moved(xDiff, yDiff);
+        coordinates.moved(direction, distance);
 
         //then
         // exception
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void shouldFailMovingBeyondTopBound() {
+    public void shouldFailMovingBeyondNorthBound() {
         //given
         Coordinates coordinates = Coordinates.of(0, Long.MAX_VALUE);
-        long xDiff = 0, yDiff = 1;
+        Direction direction = Direction.NORTH;
+        long distance = 1;
 
         //when
-        coordinates.moved(xDiff, yDiff);
+        coordinates.moved(direction, distance);
 
         //then
         // exception
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void shouldFailMovingBeyondLeftBound() {
+    public void shouldFailMovingBeyondWestBound() {
         //given
         Coordinates coordinates = Coordinates.of(Long.MIN_VALUE, 0);
-        long xDiff = -1, yDiff = 0;
+        Direction direction = Direction.WEST;
+        long distance = 1;
 
         //when
-        coordinates.moved(xDiff, yDiff);
+        coordinates.moved(direction, distance);
 
         //then
         // exception
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void shouldFailMovingBeyondRightBound() {
+    public void shouldFailMovingBeyondEastBound() {
         //given
         Coordinates coordinates = Coordinates.of(Long.MAX_VALUE, 0);
-        long xDiff = 1, yDiff = 0;
+        Direction direction = Direction.EAST;
+        long distance = 1;
 
         //when
-        coordinates.moved(xDiff, yDiff);
+        coordinates.moved(direction, distance);
 
         //then
         // exception

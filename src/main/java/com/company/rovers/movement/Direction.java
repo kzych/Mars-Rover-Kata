@@ -1,5 +1,8 @@
 package com.company.rovers.movement;
 
+/**
+ * Geographic aliases for directions in a Carthesian system.
+ */
 public enum Direction {
     NORTH(0,1),
     EAST(1,0),
@@ -14,11 +17,11 @@ public enum Direction {
         this.ySign = ySign;
     }
 
-    public int getXSign() {
+    protected int getXSign() {
         return xSign;
     }
 
-    public int getYSign() {
+    protected int getYSign() {
         return ySign;
     }
 }

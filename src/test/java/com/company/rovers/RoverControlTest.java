@@ -324,7 +324,7 @@ public class RoverControlTest {
 
         //given
         Coordinates startingPoint = mock(Coordinates.class);
-        when(startingPoint.canMove(anyLong(), anyLong())).thenReturn(false);
+        when(startingPoint.canMove(any(Direction.class), anyLong())).thenReturn(false);
         Direction startingDirection = Direction.EAST;
         Rover rover = new MarsRover(startingPoint, startingDirection);
 
@@ -340,7 +340,7 @@ public class RoverControlTest {
 
         //given
         Coordinates startingPoint = mock(Coordinates.class);
-        when(startingPoint.canMove(anyLong(), anyLong())).thenReturn(false);
+        when(startingPoint.canMove(any(Direction.class), anyLong())).thenReturn(false);
         Direction startingDirection = Direction.EAST;
         Rover rover = new MarsRover(startingPoint, startingDirection);
 

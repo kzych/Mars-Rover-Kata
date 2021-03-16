@@ -2,6 +2,9 @@ package com.company.rovers.movement;
 
 import java.util.Objects;
 
+/**
+ * Coordinates in a Carthesian system with basic move operations.
+ */
 public class Coordinates {
 
     private final long x;
@@ -24,7 +27,9 @@ public class Coordinates {
         return y;
     }
 
-    public boolean canMove(long xDiff, long yDiff) {
+    public boolean canMove(Direction direction, long distance) {
+        long xDiff = direction.getXSign() * distance;
+        long yDiff = direction.getYSign() * distance;
 
         return (xDiff > 0 ? isInUpperBound(x, xDiff) : isInLowerBound(x, xDiff)) &&
                 (yDiff > 0 ? isInUpperBound(y, yDiff) : isInLowerBound(y, yDiff));
@@ -38,12 +43,14 @@ public class Coordinates {
         return current >= Long.MIN_VALUE - diff;
     }
 
-    public Coordinates moved(long xDiff, long yDiff){
-        if(!canMove(xDiff, yDiff)) {
+    public Coordinates moved(Direction direction, long distance){
+        if(!canMove(direction, distance)) {
             throw new IllegalArgumentException("Detected X,Y overflow attempt. " +
-                    "Tried to move (" + x + "; " + y + ") by (" + xDiff + "; " + yDiff + ") within limit " +
+                    "Tried to move (" + x + "; " + y + ") by " + distance + " " + direction + " within limit " +
                     "(" + Long.MIN_VALUE + "; " + Long.MAX_VALUE + ").");
         }
+        long xDiff = direction.getXSign() * distance;
+        long yDiff = direction.getYSign() * distance;
         return new Coordinates(x + xDiff, y + yDiff);
     }
 

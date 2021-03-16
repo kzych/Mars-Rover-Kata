@@ -76,16 +76,13 @@ public class MarsRover implements Rover {
 
     @Override
     public boolean tryMoveForward() {
-        int xDiff = direction.getXSign() * VELOCITY;
-        int yDiff = direction.getYSign() * VELOCITY;
-
-        return doTryMove(xDiff, yDiff);
+        return doTryMove(this.direction, VELOCITY);
     }
 
-    private boolean doTryMove(int xDiff, int yDiff) {
+    private boolean doTryMove(Direction direction, long velocity) {
         boolean moved = false;
-        if (this.position.canMove(xDiff, yDiff)) {
-            this.position = this.position.moved(xDiff, yDiff);
+        if (this.position.canMove(direction, velocity)) {
+            this.position = this.position.moved(direction, velocity);
             moved = true;
         }
         return moved;
@@ -93,10 +90,7 @@ public class MarsRover implements Rover {
 
     @Override
     public boolean tryMoveBackwards() {
-        int xDiff = -1 * direction.getXSign() * VELOCITY;
-        int yDiff = -1 * direction.getYSign() * VELOCITY;
-
-        return doTryMove(xDiff, yDiff);
+        return doTryMove(this.direction, -1 * VELOCITY);
     }
 
 }
